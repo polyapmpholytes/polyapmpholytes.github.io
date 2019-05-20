@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Nester</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="js/lib/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
+    <link href="js/lib/jquery-ui-1.12.1.custom/jquery-ui.theme.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="codebase/fonts/font_roboto/roboto.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:600" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="codebase/dhtmlxgrid.css"/>
+
+    <link rel="stylesheet" type="text/css" href="js/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="js/easyui/themes/icon.css">
+
+
+    <style type="text/css">
+        body {
+            padding-bottom: 70px;
+        }
+
+        th {
+            min-width: 36px;
+        }
+
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+        .banner {
+            color: #fff;
+            font-family: Oswald, sans-serif;
+            background-size: cover;
+            background: #4b7499 url('images/nester-bg.jpg') no-repeat center;
+            margin: 0;
+            padding: 40px;
+            width: calc (100vw - 30px);
+            height: 100vh;
+            position: relative;
+            border-radius: 0;
+        }
+
+        .banner__text-center {
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #menu-params,
+        #menu-data,
+        #menu-files,
+        #menu-help,
+        #menu-reference {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            //height: calc(100vh - 50px);
+            display: block;
+        }
+
+        #menu-data,
+        #menu-reference {
+            background: #3677B7;
+            color: #fff;
+        }
+        #menu-reference a {
+            color: #fff;
+            text-decoration: none;
+        }
+        #menu-reference a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        #model-params td:nth-last-child(1) {
+            width: 60px;
+            min-width: 60px;
+        }
+
+        #files {
+            font-size: 1.4rem;
+        }
+        .files__title {
+            padding-top: 6px;
+            font-size: 1.8rem;
+        }
+
+        #docs {
+
+        }
+        #docs .title {
+            padding-top: 16px;
+            font-size: 2rem;
+        }
+        #docs .authors {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        #docs .source {
+            font-size: 1.6rem;
+            font-family: "Times New Roman", cursive;
+            font-style: italic;
+        }
+
+        #docs .doi {
+            font-size: 1.6rem;
+        }
+
+        #docs .abstract {
+            padding-top: 4px;
+            font-size: 1.4rem;
+        }
+
+
+    </style>
+    <script type="text/javascript" src="js/easyui/jquery.min.js"></script>
+
+
+    <script src="js/lib/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+
+    <script src="js/lib/l10n.js"></script>
+
+    <script src="js/highcharts/code/highcharts.js"></script>
+    <script src="js/highcharts/code/modules/exporting.js"></script>
+    <script src="js/highcharts/code/modules/offline-exporting.js"></script>
+
+    <script type="text/javascript" src="js/easyui/plugins/jquery.linkbutton.js"></script>
+    <script type="text/javascript" src="js/easyui/plugins/jquery.validatebox.js"></script>
+    <script type="text/javascript" src="js/easyui/plugins/jquery.pagination.js"></script>
+    <script type="text/javascript" src="js/easyui/plugins/jquery.resizable.js"></script>
+    <script type="text/javascript" src="js/easyui/plugins/jquery.parser.js"></script>
+    <script type="text/javascript" src="js/easyui/plugins/jquery.panel.js"></script>
+    <script type="text/javascript" src="js/easyui/plugins/jquery.datagrid.js"></script>
+
+
+    <script type="text/javascript" src="js/calc.js?1558343279"></script>
+    <script type="text/javascript" src="js/view.js?1558343279"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="js/mustache.js"></script>
+
+    <script>
+
+
+    </script>
+
+</head>
+
+<body onload="doOnLoad()">
+
+<nav class="navbar navbar-inverse navbar-fixed-top" id="menu">
+
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="jumbotron banner text-center">
+            <div class="banner__text-center" id="banner">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<section id="menu-docs">
+<div class="container-fluid">
+    <div class="row">
+
+        <div id="txt_abstract" class="col-md-10 col-md-offset-1 lead">
+
+               <p>На сайте представлена вычислительная программа для метода определения параметров кислотности сетчатых полиэлектролитов из  компьютерного анализа кривых потенциометрического титрования и/или из данных химического анализа по распределению катионов и анионов стандартного электролита KCl между полиэлектролитом и раствором.
+            </p><p>Количественное описание кислотной (основной) силы ионообменных групп сетчатых полиэлектролитов осуществляется посредствам трех постоянных: рК – показатель константы равновесия обмена стандартного электролита (KCl) на ионы Н+ или ОН- ионообменных групп; Δpk – разница показателя коэффициента ионообменного равновесия при нулевой и полной степени нейтрализации каждого типа ионообменных групп и параметра b, характеризующего изменение показателя коэффициента ионообменного равновесия при изменении концентрации стандартного электролита.
+            </p><p>Набор параметров кислотности для всех  видов ионообменных групп сетчатого полиэлектролита позволяет осуществить полное и компактное хранение информации о его кислотно-основных свойствах.
+            </p><p>Кроме того, вычислительная программа позволяет при известных параметрах кислотности выполнять расчеты ионных равновесий в системе «сетчатый полиэлектролит – водный раствор» при любых наперед заданных условиях.
+            </p>
+        </div>
+
+    </div>
+</div>
+</section>
+
+<section id="menu-params">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <form class="form-horizontal">
+                    <h4 id="txt_ionit">Ионит</h4>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="ionit_Tip" id="txt_ionit_tip">Тип ионита</label>
+
+                        <div class="col-sm-6">
+                            <select name="ionit_Tip" id="ionit_Tip" class="form-control input-sm">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="input-m">m, г</label>
+
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="30" step="0.01" class="form-control input-sm" id="input-m"
+                                   placeholder="m">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="inputEa">E<sub>a</sub>, мг-экв/г</label>
+
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="30" step="0.01" class="form-control input-sm" id="inputEa"
+                                   placeholder="Ea">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="inputEb">E<sub>b</sub>, мг-экв/г</label>
+
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="30" step="0.01" class="form-control input-sm" id="inputEb"
+                                   placeholder="Eb">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="inputEkt">S<sub>kt</sub>, мг-экв/г</label>
+
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="30" step="0.01" class="form-control input-sm"
+                                   id="inputEkt"
+                                   placeholder="Skt">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="inputEan">S<sub>an</sub>, мг-экв/г</label>
+
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="30" step="0.01" class="form-control input-sm"
+                                   id="inputEan"
+                                   placeholder="Gan">
+                        </div>
+                    </div>
+                    <h4 id="txt_solution">Равновесный раствор</h4>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="titrant_Tip" id="txt_titrant">Титрант</label>
+
+                        <div class="col-sm-6">
+                            <select name="titrant_Tip" id="titrant_Tip" class="form-control input-sm">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="input-Vo">V<sub>0</sub>, мл</label>
+
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="100" step="0.01" class="form-control input-sm"
+                                   id="input-Vo"
+                                   placeholder="Vo">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="input-Mo">M<sub>0</sub></label>
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="100" step="0.01" class="form-control input-sm"
+                                   id="input-Mo"
+                                   placeholder="Mo">
+                        </div>
+                    </div>
+
+                    <h5 id="txt_sostav">Ионный состав</h5>
+
+                    <div class="form-group form-group-sm form-inline">
+                        <div class="col-sm-6">
+                            <label for="electrolite_K" class="sr-only"></label>
+                            <select name="electrolite_K" id="electrolite_K" class="form-control input-sm"></select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="electrolite_Cl" class="sr-only"></label>
+                            <select name="electrolite_Cl" id="electrolite_Cl" class="form-control input-sm"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-sm hide">
+                        <label class="control-label" for="input-Ctitrant">Ctitrant</label>
+
+                        <div class="col-sm-6">
+                            <input type="number" step="0.01" min="0" max="5" class="form-control input-sm"
+                                   id="input-Ctitrant"
+                                   placeholder="Ctitrant">
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-sm hide">
+                        <label id="txt_add_acid" class="control-label" for="input-plus_udel_titra">Добавлено кислоты(щелочи)</label>
+                        <div class="col-sm-6">
+                            <input type="number" min="0" max="30" step="0.01" class="form-control input-sm"
+                                   id="input-plus_udel_titra"
+                                   placeholder="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-10 col-sm-10 col-xs-10">
+                <!--Body content-->
+                <div class="row">
+                    <div class="col-md-6" id="container-1"
+                         style="min-width: 310px; height: 600px; margin: 0 auto"></div>
+                    <div class="col-md-6">
+                        <div id="container-2" style="min-width: 310px; height: 600px; margin: 0 auto"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-10 col-sm-10 col-xs-1">
+                <h4 id="txt_params">Параметры кислотности ионно-обменных групп</h4>
+                <table id="model-params" class="table table-bordered" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Группа&nbsp;</th>
+                        <th><label class="checkbox-inline"><input id="nabor_0" type="radio" name="nabor" value="0">1</label></th>
+                        <th><label class="checkbox-inline"><input id="nabor_1" type="radio" name="nabor" value="1">2</label></th>
+                        <th><label class="checkbox-inline"><input id="nabor_2" type="radio" name="nabor" value="2">3</label></th>
+                        <th><label class="checkbox-inline"><input id="nabor_3" type="radio" name="nabor" value="3">4</label></th>
+                        <th><label class="checkbox-inline"><input id="nabor_4" type="radio" name="nabor" value="4">5</label></th>
+                        <th><label class="checkbox-inline"><input id="nabor_5" type="radio" name="nabor" value="5">6</label></th>
+                        <td width="90%"><div class="row">
+                                <div class="col-md-8 col-md-offset-4">&Sigma;&nbsp;E<sub>a</sub>=<span id="M-Ea"></span>&nbsp;&nbsp;&nbsp;&Sigma;&nbsp;E<sub>b</sub>=<span id="M-Eb"></span></div></div></td>
+                        <td>&#160;</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th id="txt_type">Тип</th>
+                        <td id="tip_0"></td>
+                        <td id="tip_1"></td>
+                        <td id="tip_2"></td>
+                        <td id="tip_3"></td>
+                        <td id="tip_4"></td>
+                        <td id="tip_5"></td>
+                        <td>
+                            <div class="form-inline">
+                                <label for="Kt" class="radio inline">Kt</label>
+                                <input id="Kt" type="radio" name="tip" value="1">
+                                <label for="An" class="radio inline">An</label>
+                                <input id="An" type="radio" name="tip" value="2">
+                            </div>
+                        </td>
+                        <td>&#160;</td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;E</th>
+                        <td id="E_0"></td>
+                        <td id="E_1"></td>
+                        <td id="E_2"></td>
+                        <td id="E_3"></td>
+                        <td id="E_4"></td>
+                        <td id="E_5"></td>
+                        <td>
+                            <div id="slider-param-e"></div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label for="E_max" class="sr-only"></label>
+                                    <input id="E_max" class="form-control input-sm"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span id="name-pk">pK</span></th>
+                        <td id="pk_0"></td>
+                        <td id="pk_1"></td>
+                        <td id="pk_2"></td>
+                        <td id="pk_3"></td>
+                        <td id="pk_4"></td>
+                        <td id="pk_5"></td>
+                        <td>
+                            <div id="slider-param-pk"></div>
+                        </td>
+                        <td>&#160;</td>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;Δpk</th>
+                        <td id="dpk_0"></td>
+                        <td id="dpk_1"></td>
+                        <td id="dpk_2"></td>
+                        <td id="dpk_3"></td>
+                        <td id="dpk_4"></td>
+                        <td id="dpk_5"></td>
+                        <td>
+                            <div id="slider-param-dpk"></div>
+                        </td>
+                        <td>&#160;</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-1">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+                        <h4>&nbsp;</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+                        <input id="g_min_interval" class="form-control input-sm" type="text" placeholder="g min">
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-8 col-md-offset-1">
+                        <input id="g_max_interval" class="form-control input-sm" type="text" placeholder="g max">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+<section id="menu-data">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 id="txt_data">Данные потенциометрического титрования</h4>
+                        <div>
+                        <table id="dg" title="" class="easyui-datagrid" style="width: 460px">
+                            <thead>
+                            <tr>
+                                <th data-options="field:'id',width:40">#</th>
+                                <th data-options="field:'pH',width:100,align:'right',editor:'numberbox'">pH</th>
+                                <th data-options="field:'g',width:100,align:'right',editor:{type:'numberbox'}">g, (мг-экв/г)</th>
+                                <th data-options="field:'Gkt',width:100,align:'right',editor:'numberbox'">G<sub>kt</sub>, (мг-экв/г)</th>
+                                <th data-options="field:'Gan',width:100,align:'right',editor:'numberbox'">G<sub>an</sub>, (мг-экв/г)</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div>
+                        <h4 id="txt_experiment">Эксперимент</h4>
+                        <div class="form-group">
+                            <label id="txt_file_name" for="input-exp-file-name">Имя файла</label><input id="input-exp-file-name" type="text" placeholder="Введите имя файла для сохранения"
+                                                                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="txt_date" for="input-exp-datetime">Дата</label><input id="input-exp-datetime" type="datetime-local"
+                                                                               class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label id="txt_title" for="input-exp-title">Название</label><input id="input-exp-title" type="text"
+                                                                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="txt_author" for="input-exp-author">Автор</label><input id="input-exp-author" type="text"
+                                                                                class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label id="txt_description" for="input-exp-description">Описание</label>
+                            <textarea id="input-exp-description" rows="10" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="menu-files">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div><h2 id="txt_files">Файлы</h2></div>
+                <div id="files"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="menu-reference">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div><h2 id="txt_sources">Литература</h2></div>
+                <div id="docs"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $.extend($.fn.datagrid.methods, {
+        editCell: function(jq,param){
+            return jq.each(function(){
+                var opts = $(this).datagrid('options');
+                var fields = $(this).datagrid('getColumnFields',true).concat($(this).datagrid('getColumnFields'));
+                for(var i=0; i<fields.length; i++){
+                    var col = $(this).datagrid('getColumnOption', fields[i]);
+                    col.editor1 = col.editor;
+                    if (fields[i] != param.field){
+                        col.editor = null;
+                    }
+                }
+                $(this).datagrid('beginEdit', param.index);
+                var ed = $(this).datagrid('getEditor', param);
+                if (ed){
+                    if ($(ed.target).hasClass('textbox-f')){
+                        $(ed.target).textbox('textbox').focus();
+                    } else {
+                        $(ed.target).focus();
+                    }
+                }
+                for(var i=0; i<fields.length; i++){
+                    var col = $(this).datagrid('getColumnOption', fields[i]);
+                    col.editor = col.editor1;
+                }
+            });
+        },
+        enableCellEditing: function(jq){
+            return jq.each(function(){
+                var dg = $(this);
+                var opts = dg.datagrid('options');
+                opts.oldOnClickCell = opts.onClickCell;
+                opts.onClickCell = function(index, field){
+                    if (opts.editIndex != undefined){
+                        if (dg.datagrid('validateRow', opts.editIndex)){
+                            dg.datagrid('endEdit', opts.editIndex);
+                            opts.editIndex = undefined;
+                        } else {
+                            return;
+                        }
+                    }
+                    dg.datagrid('selectRow', index).datagrid('editCell', {
+                        index: index,
+                        field: field
+                    });
+                    opts.editIndex = index;
+                    opts.oldOnClickCell.call(this, index, field);
+                }
+            });
+        }
+    });
+
+    $(function(){
+        $('#dg').datagrid().datagrid('enableCellEditing');
+    })
+</script>
+
+<script id="template-menu" type="x-tmpl-mustache">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">N</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#menu-params">{{ menu.parameters}}</a></li>
+                <li><a href="#menu-data"> {{ menu.data }}</a></li>
+                <li><a href="#menu-files">{{ menu.files }}</a></li>
+                <li><a href="#menu-reference"> {{ menu.reference }}</a></li>
+                <li><a href="docs/nester-manual.pdf" target="_blank">{{ menu.help }}</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{ menu.samples }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" id="examples"></ul>
+                </li>
+                <li><a href="docs/nester-user-guide.pdf" target="_blank">{{ menu.user_guide }}</a></li>
+            </ul>
+
+            <p class="navbar-text">
+                <span id="exp-title"></span>
+            </p>
+
+            <form class="navbar-form navbar-right form-inline">
+                <div class="form-group">
+                    <label class="btn btn-default btn-file">
+                        Browse <input type="file" style="display: none;" id="input-file">
+                    </label>
+
+                    <button class="btn btn-default" type="button" id="save-file">{{ menu.save }}</button>
+                    <button class="btn btn-default" type="button" id="save-server">{{menu.save_remote}}</button>
+                </div>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+
+
+</script>
+<script id="template-banner" type="x-tmpl-mustache">
+    <h1>{{ banner.title }}</h1>
+    <p>
+    {{ banner.text.1 }}<br>
+    {{ banner.text.2 }}<br>
+    {{ banner.text.3 }}
+    </p>
+</script>
+</body>
+</html>
